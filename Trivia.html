@@ -1,0 +1,224 @@
+<html>
+  <head>
+     <title>TRIVIA!</title>
+      <link rel="icon" type="image/x-icon" href="https://www.favicon.cc/logo3d/823485.png">
+   
+    <style>
+   
+   
+   body{
+  font-size: 20px;
+  font-family: sans-serif;
+background: radial-gradient(circle at 10% 20%, rgb(255, 197, 61) 0%, rgb(255, 94, 7) 90%);
+
+  color: #333;
+}
+.question{
+  font-weight: 600;
+}
+.answers {
+    margin-bottom: 20px;
+}
+
+
+ 
+  .topnav a{
+    float:left;
+    display:block;
+    color:white;
+    text-align:center;
+    padding:10px 19px;
+    text-decoration:none;
+    background-color:#034f84;
+  }
+ 
+  .topnav a:hover{
+    background-color:orange;
+    color:red;
+  }
+#submit{
+  font-family: sans-serif;
+  font-size: 20px;
+  background-color: #297;
+  color: #fff;
+  border: 0px;
+  border-radius: 3px;
+  padding: 20px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+#submit:hover{
+  background-color: #3a8;
+}
+    </style>
+  </head>
+  <body>
+    <center><h1 style="color:white"><u>Trivia on Holi</u></h1></center>
+<div class="header">
+<div class="topnav">
+
+
+<a href="Holi.html"> HOME </a>
+<a href="celebrate!.html">How is it celebrated</a>
+<a href="Trivia.html">Trivia!</a>
+<a href="img gal.html">Image Gallery</a>
+
+
+
+<br>
+</div>
+<br>
+   
+   
+    <div id="quiz"></div> <button id="submit">Get Results</button> <div id="results"></div>
+    <br>
+     <center>
+        <script>
+        
+      var myQuestions = [
+  {
+    question: "Is holi fun!?",
+    answers: {
+      a: 'yes!',
+      b: 'yes!',
+      c: 'all of the above'
+    },
+    correctAnswer: 'a'
+  },
+ 
+  {
+    question: "What does Holi celebrate?",
+    answers: {
+      a: 'Nothing, its just fun',
+      b: 'Good Over Evil',
+      c: 'The win over Ravan'
+    },
+    correctAnswer: 'b'
+  },
+ 
+  {
+    question: "What is Holi named after?",
+    answers: {
+      a: 'The festival of colours',
+      b: ' Holika',
+      c: ' fire '
+    },
+    correctAnswer: 'b'
+  },
+ 
+
+ 
+  {
+    question: "What is the powder you throw on Holi known as?",
+    answers: {
+      a: 'Powder Paint',
+      b: 'Gulal',
+      c: 'All of the above'
+    },
+    correctAnswer: 'c'
+  },
+ 
+  {
+    question: "Where is Holi celebrated?",
+    answers: {
+      a: 'Everwhere in the World',
+      b: 'Pakistan',
+      c: 'India'
+    },
+    correctAnswer: 'a'
+  }
+];
+
+
+
+var quizContainer = document.getElementById('quiz');
+var resultsContainer = document.getElementById('results');
+var submitButton = document.getElementById('submit');
+
+generateQuiz(myQuestions, quizContainer, resultsContainer, submitButton);
+
+function generateQuiz(questions, quizContainer, resultsContainer, submitButton){
+
+  function showQuestions(questions, quizContainer){
+    // we'll need a place to store the output and the answer choices
+    var output = [];
+    var answers;
+
+    // for each question...
+    for(var i=0; i<questions.length; i++){
+     
+      // first reset the list of answers
+      answers = [];
+
+      // for each available answer...
+      for(letter in questions[i].answers){
+
+        // ...add an html radio button
+        answers.push(
+          '<label>'
+            + '<input type="radio" name="question'+i+'" value="'+letter+'">'
+            + letter + ': '
+            + questions[i].answers[letter]
+          + '</label>'
+        );
+      }
+
+      // add this question and its answers to the output
+      output.push(
+        '<div class="question">' + questions[i].question + '</div>'
+        + '<div class="answers">' + answers.join('') + '</div>'
+      );
+    }
+
+    // finally combine our output list into one string of html and put it on the page
+    quizContainer.innerHTML = output.join('');
+  }
+
+
+  function showResults(questions, quizContainer, resultsContainer){
+   
+    // gather answer containers from our quiz
+    var answerContainers = quizContainer.querySelectorAll('.answers');
+   
+    // keep track of user's answers
+    var userAnswer = '';
+    var numCorrect = 0;
+   
+    // for each question...
+    for(var i=0; i<questions.length; i++){
+
+      // find selected answer
+      userAnswer = (answerContainers[i].querySelector('input[name=question'+i+']:checked')||{}).value;
+     
+      // if answer is correct
+      if(userAnswer===questions[i].correctAnswer){
+        // add to the number of correct answers
+        numCorrect++;
+       
+        // color the answers green
+        answerContainers[i].style.color = 'lightgreen';
+      }
+      // if answer is wrong or blank
+      else{
+        // color the answers red
+        answerContainers[i].style.color = 'red';
+      }
+    }
+
+    // show number of correct answers out of total
+    resultsContainer.innerHTML = numCorrect + ' out of ' + questions.length;
+  }
+
+  // show questions right away
+  showQuestions(questions, quizContainer);
+ 
+  // on submit, show results
+  submitButton.onclick = function(){
+    showResults(questions, quizContainer, resultsContainer);
+  }
+
+}
+    </script>
+     </center>
+  </body>
+</html>
